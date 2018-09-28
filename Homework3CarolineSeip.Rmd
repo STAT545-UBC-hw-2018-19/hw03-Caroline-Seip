@@ -8,14 +8,43 @@ output: github_document
 #Table of contents
 -Introduction
 -Loading packages
--Task 1
+-Task 1: Get the maximum and minimum of GDP per capita for all continents
 -Task 2
 -Task 3
 -But I want to do more!
 
-First let's load the gapminder dataset
+First let's load the dataset, tidyverse and knitr
 ```{r}
+#Load gapminder dataset
 library(gapminder)
+#Load tidyverse to use dplyr and ggplot
 library(tidyverse)
+#Load knitr to use the kable function
+library(knitr)
+```
+
+#Task 1: Get the maximum and minimum of GDP per capita for all continents
+
+```{r}
+gapminder %>% 
+  group_by(continent) %>%
+  mutate_each(funs(round(.,2)), gdpPercap) %>% 
+  summarize(min=min(gdpPercap),
+            max=max(gdpPercap)) %>% 
+  kable(col.names = c("Continent", "Minimum GDP per capita", "Maximum GDP per capita"))
+```
+
+Hmm let's do a check to make sure that went right... let's look at the minimum GDP per capita for Oceania
+```{r}
+gapminder %>% 
+  #Filter to only see Oceania data
+  filter(continent == "Oceania") %>% 
+  #Arrange by gdpPercap so that we can see the minimum first
+  arrange(gdpPercap)
+  
+```
+
+```{r}
+ggplot
 ```
 
