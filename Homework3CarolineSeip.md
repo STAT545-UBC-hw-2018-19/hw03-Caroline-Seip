@@ -118,26 +118,26 @@ mean(lifeExp)
 
 ``` r
 gapminder %>% 
-  filter(year == "1952"| year == "2007") %>% 
    select(continent, year, lifeExp) %>% 
   group_by(continent, year) %>% 
   summarize(life = mean(lifeExp))
 ```
 
-    ## # A tibble: 10 x 3
+    ## # A tibble: 60 x 3
     ## # Groups:   continent [?]
     ##    continent  year  life
     ##    <fct>     <int> <dbl>
     ##  1 Africa     1952  39.1
-    ##  2 Africa     2007  54.8
-    ##  3 Americas   1952  53.3
-    ##  4 Americas   2007  73.6
-    ##  5 Asia       1952  46.3
-    ##  6 Asia       2007  70.7
-    ##  7 Europe     1952  64.4
-    ##  8 Europe     2007  77.6
-    ##  9 Oceania    1952  69.3
-    ## 10 Oceania    2007  80.7
+    ##  2 Africa     1957  41.3
+    ##  3 Africa     1962  43.3
+    ##  4 Africa     1967  45.3
+    ##  5 Africa     1972  47.5
+    ##  6 Africa     1977  49.6
+    ##  7 Africa     1982  51.6
+    ##  8 Africa     1987  53.3
+    ##  9 Africa     1992  53.6
+    ## 10 Africa     1997  53.6
+    ## # ... with 50 more rows
 
 ``` r
 gapminder %>%
