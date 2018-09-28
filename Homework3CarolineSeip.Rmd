@@ -1,0 +1,21 @@
+---
+title: "Homework3CarolineSeip"
+author: "Caroline"
+date: "September 27, 2018"
+output: github_document
+---
+
+#Table of contents
+-Introduction
+-Loading packages
+-Task 1
+-Task 2
+-Task 3
+-But I want to do more!
+
+First let's load the gapminder dataset
+```{r}
+library(gapminder)
+library(tidyverse)
+```
+
