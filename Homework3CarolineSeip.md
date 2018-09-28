@@ -37,17 +37,21 @@ Task 1: Get the maximum and minimum of GDP per capita for all continents
 ========================================================================
 
 ``` r
-gapminder %>% 
+a <- gapminder %>% 
   group_by(continent) %>%
   mutate_each(funs(round(.,2)), gdpPercap) %>% 
   summarize(min=min(gdpPercap),
-            max=max(gdpPercap)) %>% 
-  kable(col.names = c("Continent", "Minimum GDP per capita", "Maximum GDP per capita"))
+            max=max(gdpPercap))
 ```
 
     ## `mutate_each()` is deprecated.
     ## Use `mutate_all()`, `mutate_at()` or `mutate_if()` instead.
     ## To map `funs` over a selection of variables, use `mutate_at()`
+
+``` r
+a %>% 
+kable(col.names = c("Continent", "Minimum GDP per capita", "Maximum GDP per capita"))
+```
 
 | Continent |  Minimum GDP per capita|  Maximum GDP per capita|
 |:----------|-----------------------:|-----------------------:|
@@ -82,13 +86,68 @@ gapminder %>%
     ## 10 New Zealand Oceania    1977    72.2  3164900    16234.
     ## # ... with 14 more rows
 
+Yay it's right!
+
+Let's do a visual check by making a box plot to see the minimum and maximum values of GDP per capita by continent:
+
 ``` r
-ggplot
+  #Use ggplot, specify your dataset and aesthetics(x,y)
+ggplot(gapminder, aes(continent, gdpPercap)) +
+  #Add a boxplot
+  geom_boxplot(aes(fill=continent)) +
+  #Label the axes
+  xlab("Continent") +
+  ylab("GDP per capita") +
+  guides(fill=guide_legend(title= "Continent"))
 ```
 
-    ## function (data = NULL, mapping = aes(), ..., environment = parent.frame()) 
-    ## {
-    ##     UseMethod("ggplot")
-    ## }
-    ## <bytecode: 0x7f9d749684c0>
-    ## <environment: namespace:ggplot2>
+![](Homework3CarolineSeip_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+Task 2: How is life expectancy changing over time on different continents?
+==========================================================================
+
+``` r
+gapminder %>%
+mean(lifeExp)
+```
+
+    ## Warning in mean.default(., lifeExp): argument is not numeric or logical:
+    ## returning NA
+
+    ## [1] NA
+
+``` r
+gapminder %>% 
+  filter(year == "1952"| year == "2007") %>% 
+   select(continent, year, lifeExp) %>% 
+  group_by(continent, year) %>% 
+  summarize(life = mean(lifeExp))
+```
+
+    ## # A tibble: 10 x 3
+    ## # Groups:   continent [?]
+    ##    continent  year  life
+    ##    <fct>     <int> <dbl>
+    ##  1 Africa     1952  39.1
+    ##  2 Africa     2007  54.8
+    ##  3 Americas   1952  53.3
+    ##  4 Americas   2007  73.6
+    ##  5 Asia       1952  46.3
+    ##  6 Asia       2007  70.7
+    ##  7 Europe     1952  64.4
+    ##  8 Europe     2007  77.6
+    ##  9 Oceania    1952  69.3
+    ## 10 Oceania    2007  80.7
+
+``` r
+gapminder %>%
+  ggplot(aes(year, lifeExp)) +
+  geom_smooth(se= FALSE, aes(colour= continent)) +
+  xlab("Year") +
+  ylab("Life expectancy (years)") +
+  guides(fill=guide_legend(title= "Continent"))
+```
+
+    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+
+![](Homework3CarolineSeip_files/figure-markdown_github/unnamed-chunk-7-1.png)

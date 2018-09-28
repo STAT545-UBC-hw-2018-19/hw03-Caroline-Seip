@@ -26,12 +26,13 @@ library(knitr)
 #Task 1: Get the maximum and minimum of GDP per capita for all continents
 
 ```{r}
-gapminder %>% 
+a <- gapminder %>% 
   group_by(continent) %>%
   mutate_each(funs(round(.,2)), gdpPercap) %>% 
   summarize(min=min(gdpPercap),
-            max=max(gdpPercap)) %>% 
-  kable(col.names = c("Continent", "Minimum GDP per capita", "Maximum GDP per capita"))
+            max=max(gdpPercap))
+a %>% 
+kable(col.names = c("Continent", "Minimum GDP per capita", "Maximum GDP per capita"))
 ```
 
 Hmm let's do a check to make sure that went right... let's look at the minimum GDP per capita for Oceania
@@ -44,7 +45,39 @@ gapminder %>%
   
 ```
 
+Yay it's right!
+
+Let's do a visual check by making a box plot to see the minimum and maximum values of GDP per capita by continent:
 ```{r}
-ggplot
+  #Use ggplot, specify your dataset and aesthetics(x,y)
+ggplot(gapminder, aes(continent, gdpPercap)) +
+  #Add a boxplot
+  geom_boxplot(aes(fill=continent)) +
+  #Label the axes
+  xlab("Continent") +
+  ylab("GDP per capita") +
+  guides(fill=guide_legend(title= "Continent"))
+```
+
+#Task 2: How is life expectancy changing over time on different continents?
+```{r}
+gapminder %>%
+mean(lifeExp)
+```
+```{r}
+gapminder %>% 
+  filter(year == "1952"| year == "2007") %>% 
+   select(continent, year, lifeExp) %>% 
+  group_by(continent, year) %>% 
+  summarize(life = mean(lifeExp))
+```
+
+```{r}
+gapminder %>%
+  ggplot(aes(year, lifeExp)) +
+  geom_smooth(se= FALSE, aes(colour= continent)) +
+  xlab("Year") +
+  ylab("Life expectancy (years)") +
+  guides(fill=guide_legend(title= "Continent"))
 ```
 
