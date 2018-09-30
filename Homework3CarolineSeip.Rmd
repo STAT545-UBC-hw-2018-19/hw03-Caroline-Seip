@@ -6,12 +6,12 @@ output: github_document
 ---
 
 #Table of contents
--Introduction
--Loading packages
--Task 1: Get the maximum and minimum of GDP per capita for all continents
--Task 2
--Task 3
--But I want to do more!
+- Introduction
+- Loading packages
+- Task 1: Get the maximum and minimum of GDP per capita for all continents
+- Task 2
+- Task 3
+- But I want to do more!
 
 First let's load the dataset, tidyverse and knitr
 ```{r}
@@ -68,7 +68,8 @@ mean(lifeExp)
 gapminder %>% 
    select(continent, year, lifeExp) %>% 
   group_by(continent, year) %>% 
-  summarize(life = mean(lifeExp))
+  summarize(life = mean(lifeExp)) %>% 
+  kable()
 ```
 
 ```{r}

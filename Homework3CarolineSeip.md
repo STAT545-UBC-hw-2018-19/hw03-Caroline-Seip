@@ -6,7 +6,12 @@ September 27, 2018
 Table of contents
 =================
 
--Introduction -Loading packages -Task 1: Get the maximum and minimum of GDP per capita for all continents -Task 2 -Task 3 -But I want to do more!
+-   Introduction
+-   Loading packages
+-   Task 1: Get the maximum and minimum of GDP per capita for all continents
+-   Task 2
+-   Task 3
+-   But I want to do more!
 
 First let's load the dataset, tidyverse and knitr
 
@@ -120,24 +125,72 @@ mean(lifeExp)
 gapminder %>% 
    select(continent, year, lifeExp) %>% 
   group_by(continent, year) %>% 
-  summarize(life = mean(lifeExp))
+  summarize(life = mean(lifeExp)) %>% 
+  kable()
 ```
 
-    ## # A tibble: 60 x 3
-    ## # Groups:   continent [?]
-    ##    continent  year  life
-    ##    <fct>     <int> <dbl>
-    ##  1 Africa     1952  39.1
-    ##  2 Africa     1957  41.3
-    ##  3 Africa     1962  43.3
-    ##  4 Africa     1967  45.3
-    ##  5 Africa     1972  47.5
-    ##  6 Africa     1977  49.6
-    ##  7 Africa     1982  51.6
-    ##  8 Africa     1987  53.3
-    ##  9 Africa     1992  53.6
-    ## 10 Africa     1997  53.6
-    ## # ... with 50 more rows
+| continent |  year|      life|
+|:----------|-----:|---------:|
+| Africa    |  1952|  39.13550|
+| Africa    |  1957|  41.26635|
+| Africa    |  1962|  43.31944|
+| Africa    |  1967|  45.33454|
+| Africa    |  1972|  47.45094|
+| Africa    |  1977|  49.58042|
+| Africa    |  1982|  51.59287|
+| Africa    |  1987|  53.34479|
+| Africa    |  1992|  53.62958|
+| Africa    |  1997|  53.59827|
+| Africa    |  2002|  53.32523|
+| Africa    |  2007|  54.80604|
+| Americas  |  1952|  53.27984|
+| Americas  |  1957|  55.96028|
+| Americas  |  1962|  58.39876|
+| Americas  |  1967|  60.41092|
+| Americas  |  1972|  62.39492|
+| Americas  |  1977|  64.39156|
+| Americas  |  1982|  66.22884|
+| Americas  |  1987|  68.09072|
+| Americas  |  1992|  69.56836|
+| Americas  |  1997|  71.15048|
+| Americas  |  2002|  72.42204|
+| Americas  |  2007|  73.60812|
+| Asia      |  1952|  46.31439|
+| Asia      |  1957|  49.31854|
+| Asia      |  1962|  51.56322|
+| Asia      |  1967|  54.66364|
+| Asia      |  1972|  57.31927|
+| Asia      |  1977|  59.61056|
+| Asia      |  1982|  62.61794|
+| Asia      |  1987|  64.85118|
+| Asia      |  1992|  66.53721|
+| Asia      |  1997|  68.02052|
+| Asia      |  2002|  69.23388|
+| Asia      |  2007|  70.72848|
+| Europe    |  1952|  64.40850|
+| Europe    |  1957|  66.70307|
+| Europe    |  1962|  68.53923|
+| Europe    |  1967|  69.73760|
+| Europe    |  1972|  70.77503|
+| Europe    |  1977|  71.93777|
+| Europe    |  1982|  72.80640|
+| Europe    |  1987|  73.64217|
+| Europe    |  1992|  74.44010|
+| Europe    |  1997|  75.50517|
+| Europe    |  2002|  76.70060|
+| Europe    |  2007|  77.64860|
+| Oceania   |  1952|  69.25500|
+| Oceania   |  1957|  70.29500|
+| Oceania   |  1962|  71.08500|
+| Oceania   |  1967|  71.31000|
+| Oceania   |  1972|  71.91000|
+| Oceania   |  1977|  72.85500|
+| Oceania   |  1982|  74.29000|
+| Oceania   |  1987|  75.32000|
+| Oceania   |  1992|  76.94500|
+| Oceania   |  1997|  78.19000|
+| Oceania   |  2002|  79.74000|
+| Oceania   |  2007|  80.71950|
 
 ``` r
 gapminder %>%
