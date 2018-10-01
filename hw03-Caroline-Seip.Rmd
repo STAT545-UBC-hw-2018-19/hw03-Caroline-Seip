@@ -1,7 +1,0 @@
----
-title: "hw03-Caroline-Seip"
-author: "Caroline"
-date: "September 27, 2018"
-output: github_document
-
-
