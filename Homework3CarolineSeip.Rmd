@@ -9,7 +9,7 @@ output: github_document
 - Introduction
 - Loading packages
 - Task 1: Get the maximum and minimum of GDP per capita for all continents
-- Task 2
+- Task 2: How is life expectancy changing over time on different continents?
 - Task 3
 - But I want to do more!
 
@@ -26,17 +26,22 @@ library(knitr)
 #Task 1: Get the maximum and minimum of GDP per capita for all continents
 
 ```{r}
+#Use the gapminder dataset
 a <- gapminder %>% 
+  #Group by continent
   group_by(continent) %>%
+  #Use mutate and summarize to create minimum and maximum variables
   mutate_each(funs(round(.,2)), gdpPercap) %>% 
   summarize(min=min(gdpPercap),
             max=max(gdpPercap))
+#Now put this into a table using the 'kable' function
 a %>% 
 kable(col.names = c("Continent", "Minimum GDP per capita", "Maximum GDP per capita"))
 ```
 
-Hmm let's do a check to make sure that went right... let's look at the minimum GDP per capita for Oceania
+Ok, now let's do a check to make sure that went right... let's look at the minimum GDP per capita for Oceania
 ```{r}
+#Use the gapminder dataset
 gapminder %>% 
   #Filter to only see Oceania data
   filter(continent == "Oceania") %>% 
@@ -45,7 +50,7 @@ gapminder %>%
   
 ```
 
-Yay it's right!
+Yay it's right! We can see the GDP per capita for Australia in 1952 is 10040, which matches up with the summarize function we used to find the minimum GDP per capita in Oceania.
 
 Let's do a visual check by making a box plot to see the minimum and maximum values of GDP per capita by continent:
 ```{r}
@@ -60,16 +65,21 @@ ggplot(gapminder, aes(continent, gdpPercap)) +
 ```
 
 #Task 2: How is life expectancy changing over time on different continents?
+
+
 ```{r}
-gapminder %>%
-mean(lifeExp)
-```
-```{r}
-gapminder %>% 
+#Use the gapminder dataset
+long <- gapminder %>% 
+  #Select the continent, year, and life expectancy variables
    select(continent, year, lifeExp) %>% 
+  #Group by continent and year
   group_by(continent, year) %>% 
-  summarize(life = mean(lifeExp)) %>% 
-  kable()
+  #Find mean life expectancy for each continent, in each year
+  summarize(life = mean(lifeExp))
+
+wide <- spread(long, year, life)
+
+colnames(wide) <- c("continent", "first", "last")
 ```
 
 ```{r}
